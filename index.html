@@ -31,9 +31,9 @@
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
-      <a href="#research">Research</a>
       <a href="#experience">Experience</a>
       <a href="#work">Work</a>
+      <a href="#research">Research</a>
       <a href="#expertise">Expertise</a>
       <a href="#contact" class="nav-cta">Let's talk</a>
     </nav>
@@ -68,27 +68,7 @@
           <li style="--c:var(--teal)">ML Systems</li>
         </ul>
       </div>
-      <a href="#metrics" class="scroll-cue" aria-label="Scroll down"><span></span></a>
-    </section>
-
-    <!-- ═════════════ METRICS ═════════════ -->
-    <section class="metrics" id="metrics">
-      <div class="metric reveal">
-        <div class="metric-num"><span data-count="7" data-suffix="×">7×</span></div>
-        <div class="metric-label">faster retrieval than exact TF-IDF<span>AcademIQ search engine</span></div>
-      </div>
-      <div class="metric reveal">
-        <div class="metric-num"><span data-count="0.95" data-decimals="2">0.95</span></div>
-        <div class="metric-label">R² on city-scale crime-risk regression<span>London risk engine</span></div>
-      </div>
-      <div class="metric reveal">
-        <div class="metric-num"><span data-count="90.4" data-decimals="1" data-suffix="%">90.4%</span></div>
-        <div class="metric-label">boundary IoU for diffusion floor plans<span>SpatioArchitect</span></div>
-      </div>
-      <div class="metric reveal">
-        <div class="metric-num"><span data-count="5">5</span></div>
-        <div class="metric-label">federated hospital nodes with differential privacy<span>CortexPI</span></div>
-      </div>
+      <a href="#about" class="scroll-cue" aria-label="Scroll down"><span></span></a>
     </section>
 
     <!-- ═════════════ ABOUT ═════════════ -->
@@ -100,7 +80,7 @@
       <div class="about-grid">
         <div class="about-copy reveal">
           <p>I design and ship machine learning systems end-to-end: framing the problem, engineering the data, architecting and training the model, and taking it to reliable, scalable production.</p>
-          <p>I came to machine learning through <b>full-stack engineering</b>. I spent years building the product side of AI: interfaces for AI-driven solutions, the real-time frontend of an agentic AI platform, and later the retrieval core of an enterprise RAG assistant. That background shapes how I work. I care about the details that separate demos from deployed AI: rigorous evaluation, calibrated uncertainty, efficient training and inference, privacy by design, and models people can trust and explain.</p>
+          <p>I came to machine learning through <b>full-stack engineering</b>. I spent years building the product side of AI, from interfaces for AI-driven solutions to the real-time frontend of an agentic AI platform, before moving into the models themselves with AI/ML work on an enterprise RAG platform. That background shapes how I work. I care about the details that separate demos from deployed AI: rigorous evaluation, calibrated uncertainty, efficient training and inference, privacy by design, and models people can trust and explain.</p>
           <div class="edu">
             <div class="edu-icon" aria-hidden="true">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
@@ -128,76 +108,12 @@
       </div>
     </section>
 
-    <!-- ═════════════ RESEARCH ═════════════ -->
-    <section class="section" id="research">
-      <div class="section-head reveal">
-        <p class="kicker">02 · Research</p>
-        <h2>Learning to control the <span class="grad">radio environment</span> of 6G.</h2>
-      </div>
-      <article class="paper reveal">
-        <div class="paper-body">
-          <div class="paper-badges">
-            <span class="badge badge-glow">Accepted · IEEE GLOBECOM 2026</span>
-            <span class="badge">Co-author</span>
-          </div>
-          <h3 class="paper-title">RIS-Assisted Physical Layer Security for PASS-enabled Backscattered NOMA Systems</h3>
-          <p class="paper-venue">IEEE Global Communications Conference (GLOBECOM) 2026</p>
-          <div class="paper-role">
-            <div class="role-line"><span class="role-k">Role</span><span>Student Researcher · IPT Lab, NUST</span></div>
-            <div class="role-line"><span class="role-k">Focus</span><span>Reinforcement learning for reconfigurable 6G wireless systems</span></div>
-          </div>
-          <ul class="ticks">
-            <li>Explored <b>reinforcement learning</b> for reconfigurable 6G wireless systems built on <b>reconfigurable intelligent surfaces (RIS)</b>.</li>
-            <li>Co-authored work on <b>physical-layer security</b> for PASS-enabled backscatter <b>NOMA</b> networks, accepted at one of IEEE's flagship communications conferences.</li>
-          </ul>
-          <div class="tags"><span>Reinforcement Learning</span><span>6G</span><span>RIS</span><span>NOMA</span><span>Physical-Layer Security</span><span>Backscatter Communication</span></div>
-        </div>
-        <div class="paper-visual" aria-hidden="true">
-          <svg viewBox="0 0 360 300" class="ris">
-            <defs>
-              <linearGradient id="beamA" x1="0" x2="1"><stop offset="0" stop-color="#22D3EE" stop-opacity=".0"/><stop offset=".5" stop-color="#22D3EE"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
-              <linearGradient id="beamB" x1="0" x2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899" stop-opacity=".2"/></linearGradient>
-              <radialGradient id="halo"><stop offset="0" stop-color="#22D3EE" stop-opacity=".45"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
-            </defs>
-            <!-- base station -->
-            <circle cx="46" cy="232" r="38" fill="url(#halo)"/>
-            <path d="M46 208 L34 262 M46 208 L58 262 M38 244 L54 244" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="46" cy="204" r="5" fill="#22D3EE"/>
-            <text x="46" y="284" text-anchor="middle" class="svg-lbl">BS</text>
-            <!-- beams -->
-            <path class="beam" d="M50 204 L196 92" stroke="url(#beamA)" stroke-width="2.4"/>
-            <path class="beam b2" d="M214 104 L312 226" stroke="url(#beamB)" stroke-width="2.4"/>
-            <path class="beam b3" d="M214 110 L300 70" stroke="#8B5CF6" stroke-opacity=".5" stroke-width="1.6"/>
-            <!-- RIS panel -->
-            <g transform="translate(180 30) rotate(8)">
-              <rect x="-6" y="-6" width="64" height="136" rx="8" fill="#151827" stroke="#ffffff" stroke-opacity=".12"/>
-              <g id="risCells"></g>
-            </g>
-            <text x="212" y="182" text-anchor="middle" class="svg-lbl">RIS</text>
-            <!-- users -->
-            <circle cx="314" cy="232" r="9" fill="#EC4899" fill-opacity=".18" stroke="#EC4899"/>
-            <circle cx="314" cy="232" r="3" fill="#EC4899"/>
-            <text x="314" y="262" text-anchor="middle" class="svg-lbl">User</text>
-            <circle cx="304" cy="66" r="9" fill="#8B5CF6" fill-opacity=".18" stroke="#8B5CF6"/>
-            <circle cx="304" cy="66" r="3" fill="#8B5CF6"/>
-            <text x="304" y="44" text-anchor="middle" class="svg-lbl">Tag</text>
-            <!-- eavesdropper -->
-            <g opacity=".75">
-              <circle cx="120" cy="60" r="9" fill="none" stroke="#94A3B8" stroke-dasharray="3 3"/>
-              <path d="M115 55 L125 65 M125 55 L115 65" stroke="#94A3B8" stroke-width="1.6"/>
-              <text x="120" y="36" text-anchor="middle" class="svg-lbl">Eve</text>
-            </g>
-          </svg>
-        </div>
-      </article>
-    </section>
-
     <!-- ═════════════ EXPERIENCE ═════════════ -->
     <section class="section" id="experience">
       <div class="section-head reveal">
-        <p class="kicker">03 · Experience</p>
-        <h2>Every role, built around <span class="grad">AI systems</span>.</h2>
-        <p class="lede">From AI product interfaces to agentic platforms to enterprise RAG, each step has moved me closer to the model.</p>
+        <p class="kicker">02 · Experience</p>
+        <h2>Where I've <span class="grad">worked</span>.</h2>
+        <p class="lede">From building the interfaces around AI to building the AI itself, I now work across both the model and the product.</p>
       </div>
 
       <ol class="timeline">
@@ -266,11 +182,75 @@
     <!-- ═════════════ WORK ═════════════ -->
     <section class="section" id="work">
       <div class="section-head reveal">
-        <p class="kicker">04 · Featured Work</p>
-        <h2>Systems, not notebooks.</h2>
+        <p class="kicker">03 · Featured Work</p>
+        <h2>Selected <span class="grad">projects</span>.</h2>
         <p class="lede">Five end-to-end builds across clinical AI, retrieval, medical imaging, geospatial intelligence and generative design. Open any project to see its architecture and results.</p>
       </div>
       <div class="bento" id="bento"></div>
+    </section>
+
+    <!-- ═════════════ RESEARCH ═════════════ -->
+    <section class="section" id="research">
+      <div class="section-head reveal">
+        <p class="kicker">04 · Research</p>
+        <h2>Machine learning for <span class="grad"><span class="nowrap">next-generation</span> wireless systems</span>.</h2>
+      </div>
+      <article class="paper reveal">
+        <div class="paper-body">
+          <div class="paper-badges">
+            <span class="badge badge-glow">Accepted · IEEE GLOBECOM 2026</span>
+            <span class="badge">Co-author</span>
+          </div>
+          <h3 class="paper-title">RIS-Assisted Physical Layer Security for PASS-enabled Backscattered NOMA Systems</h3>
+          <p class="paper-venue">IEEE Global Communications Conference (GLOBECOM) 2026</p>
+          <div class="paper-role">
+            <div class="role-line"><span class="role-k">Role</span><span>Student Researcher · IPT Lab, NUST</span></div>
+            <div class="role-line"><span class="role-k">Focus</span><span>Reinforcement learning for reconfigurable 6G wireless systems</span></div>
+          </div>
+          <ul class="ticks">
+            <li>Explored <b>reinforcement learning</b> for reconfigurable 6G wireless systems built on <b>reconfigurable intelligent surfaces (RIS)</b>.</li>
+            <li>Co-authored a paper on <b>physical-layer security</b> for PASS-enabled backscatter <b>NOMA</b> networks, accepted at <b>IEEE GLOBECOM 2026</b>.</li>
+          </ul>
+          <div class="tags"><span>Reinforcement Learning</span><span>6G</span><span>RIS</span><span>NOMA</span><span>Physical-Layer Security</span><span>Backscatter Communication</span></div>
+        </div>
+        <div class="paper-visual" aria-hidden="true">
+          <svg viewBox="0 0 360 300" class="ris">
+            <defs>
+              <linearGradient id="beamA" x1="0" x2="1"><stop offset="0" stop-color="#22D3EE" stop-opacity=".0"/><stop offset=".5" stop-color="#22D3EE"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient>
+              <linearGradient id="beamB" x1="0" x2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#EC4899" stop-opacity=".2"/></linearGradient>
+              <radialGradient id="halo"><stop offset="0" stop-color="#22D3EE" stop-opacity=".45"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></radialGradient>
+            </defs>
+            <!-- base station -->
+            <circle cx="46" cy="232" r="38" fill="url(#halo)"/>
+            <path d="M46 208 L34 262 M46 208 L58 262 M38 244 L54 244" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="46" cy="204" r="5" fill="#22D3EE"/>
+            <text x="46" y="284" text-anchor="middle" class="svg-lbl">BS</text>
+            <!-- beams -->
+            <path class="beam" d="M50 204 L196 92" stroke="url(#beamA)" stroke-width="2.4"/>
+            <path class="beam b2" d="M214 104 L312 226" stroke="url(#beamB)" stroke-width="2.4"/>
+            <path class="beam b3" d="M214 110 L300 70" stroke="#8B5CF6" stroke-opacity=".5" stroke-width="1.6"/>
+            <!-- RIS panel -->
+            <g transform="translate(180 30) rotate(8)">
+              <rect x="-6" y="-6" width="64" height="136" rx="8" fill="#151827" stroke="#ffffff" stroke-opacity=".12"/>
+              <g id="risCells"></g>
+            </g>
+            <text x="212" y="182" text-anchor="middle" class="svg-lbl">RIS</text>
+            <!-- users -->
+            <circle cx="314" cy="232" r="9" fill="#EC4899" fill-opacity=".18" stroke="#EC4899"/>
+            <circle cx="314" cy="232" r="3" fill="#EC4899"/>
+            <text x="314" y="262" text-anchor="middle" class="svg-lbl">User</text>
+            <circle cx="304" cy="66" r="9" fill="#8B5CF6" fill-opacity=".18" stroke="#8B5CF6"/>
+            <circle cx="304" cy="66" r="3" fill="#8B5CF6"/>
+            <text x="304" y="44" text-anchor="middle" class="svg-lbl">Tag</text>
+            <!-- eavesdropper -->
+            <g opacity=".75">
+              <circle cx="120" cy="60" r="9" fill="none" stroke="#94A3B8" stroke-dasharray="3 3"/>
+              <path d="M115 55 L125 65 M125 55 L115 65" stroke="#94A3B8" stroke-width="1.6"/>
+              <text x="120" y="36" text-anchor="middle" class="svg-lbl">Eve</text>
+            </g>
+          </svg>
+        </div>
+      </article>
     </section>
 
     <!-- ═════════════ EXPERTISE ═════════════ -->

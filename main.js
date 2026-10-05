@@ -347,31 +347,16 @@ function fill(id, items) {
 fill("#trackA", STACK_A);
 fill("#trackB", STACK_B);
 
-/* ───────────────────────── reveal + counters ───────────────────────── */
-function countUp(el) {
-  const target = parseFloat(el.dataset.count);
-  const dec = +(el.dataset.decimals || 0);
-  const suf = el.dataset.suffix || "";
-  if (reduceMotion) return;
-  const t0 = performance.now(), dur = 1600;
-  const step = (t) => {
-    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4);
-    el.textContent = (target * e).toFixed(dec) + suf;
-    if (k < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
+/* ───────────────────────── reveal───────────────────────── */
 const revealIO = new IntersectionObserver(
   (entries) => entries.forEach((e) => {
     if (!e.isIntersecting) return;
     e.target.classList.add("in");
-    e.target.querySelectorAll("[data-count]").forEach(countUp);
     revealIO.unobserve(e.target);
   }),
   { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
 );
 document.querySelectorAll(".hero .reveal").forEach((el, i) => el.style.setProperty("--d", `${0.1 + i * 0.09}s`));
-document.querySelectorAll(".metric.reveal").forEach((el, i) => el.style.setProperty("--d", `${i * 0.08}s`));
 document.querySelectorAll(".xp.reveal").forEach((el, i) => el.style.setProperty("--d", `${i * 0.08}s`));
 document.querySelectorAll(".reveal").forEach((el) => revealIO.observe(el));
 
