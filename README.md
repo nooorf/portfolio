@@ -6,7 +6,7 @@ Static site: plain HTML, CSS and JS with no build step and no dependencies.
 index.html   page markup and content (experience, research, about)
 styles.css   design tokens + layout (palette shared with the GitHub README)
 main.js      project data, project modal, neural-field canvas, animations
-img/         project screenshots shown on flagship cards and in modals
+img/         project screenshots shown on featured cards and in modals
 og.png       1200×630 social preview
 vercel.json  clean URLs + caching headers
 ```
@@ -21,6 +21,6 @@ vercel.json  clean URLs + caching headers
 
 ## Editing
 
-- Projects: edit the `PROJECTS` array at the top of `main.js`. `feature: true` makes a full-width flagship card; its `images` (first one on the card, all in the modal) live in `img/projects/`.
+- Projects: edit the `PROJECTS` array at the top of `main.js`. `feature: true` makes a full-width featured card; its `images` (first one on the card, all in the modal) live in `img/projects/`.
 - Tech marquee: edit `STACK_A` / `STACK_B` in `main.js`.
 - Typing line in the hero: edit `TYPED` in `main.js`.

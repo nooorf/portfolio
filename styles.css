@@ -266,9 +266,8 @@ h3 { font-family: var(--f-display); color: var(--text); }
 .card-stack { font: 400 12px/1.4 var(--f-mono); color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .card-open { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line-2); color: var(--text); transition: background .3s, transform .3s, color .3s; }
 .card:hover .card-open { background: var(--c); color: #06070F; transform: rotate(-45deg); border-color: transparent; }
-.card-flag { font: 500 11px/1 var(--f-mono); letter-spacing: .6px; color: var(--c); padding: 6px 9px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--c) 40%, transparent); background: color-mix(in srgb, var(--c) 9%, transparent); }
 
-/* flagship cards: copy beside a framed product screenshot */
+/* featured cards: copy beside a framed product screenshot */
 .card.feature { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; align-items: center; padding: 36px; min-height: 0;
   background: radial-gradient(90% 120% at 100% 0%, color-mix(in srgb, var(--c) 12%, transparent), transparent 60%), linear-gradient(180deg, rgba(21,24,39,.85), rgba(13,15,30,.7)); }
 .card.feature.flip { grid-template-columns: 1.25fr 1fr; }

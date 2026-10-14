@@ -385,7 +385,7 @@ PROJECTS.forEach((p, i) => {
   card.style.setProperty("--d", `${p.feature ? 0 : (i % 2) * 0.08}s`);
   card.setAttribute("aria-haspopup", "dialog");
   const body = `
-    <div class="card-top"><span class="card-cat">${p.cat}</span>${p.status ? `<span class="card-status">${p.status}</span>` : p.feature ? `<span class="card-flag">Flagship</span>` : ""}</div>
+    <div class="card-top"><span class="card-cat">${p.cat}</span>${p.status ? `<span class="card-status">${p.status}</span>` : ""}</div>
     <h3>${p.title}</h3>
     <p class="card-sub">${p.sub}</p>
     <div class="card-metric"><strong>${p.metric[0]}</strong><span>${p.metric[1]}</span></div>
