@@ -1,47 +1,97 @@
 /* ───────────────────────── data ───────────────────────── */
 const PROJECTS = [
   {
-    id: "cortexpi",
-    wide: true,
-    color: "var(--cyan)",
-    cat: "Clinical AI · Federated Learning",
-    title: "CortexPI",
-    sub: "Federated ICU deterioration intelligence: real-time, privacy-preserving risk prediction across hospitals.",
-    metric: ["5", "hospital nodes trained with FedAvg + differential privacy"],
-    stack: ["PyTorch", "Mamba SSM", "Triton", "RAPIDS", "Spark", "Kafka", "Delta Lake"],
+    id: "shelfwise",
+    feature: true,
+    color: "var(--violet)",
+    cat: "Conversational AI · Information Retrieval",
+    title: "Shelfwise",
+    sub: "A voice-first library assistant that understands a mood, respects every constraint, and cannot invent a book.",
+    metric: ["0%", "invented books across 150 adversarial cases, versus 21% for naive RAG"],
+    stack: ["Qwen3-4B", "BM25 + bge", "pgvector", "FastAPI", "Whisper", "React", "three.js VRM"],
+    repo: "https://github.com/nooorf/shelfwise",
     summary:
-      "A real-time, privacy-preserving clinical AI platform that predicts ICU patient deterioration across distributed hospital nodes, without a single patient record ever leaving its source hospital.",
-    stats: [["5", "federated hospital nodes"], ["(ε, δ)", "formal DP guarantees"], ["3", "clinical prediction heads"], ["2×T4", "pipeline-parallel training"]],
+      "Ask it the way you'd ask a librarian, typed or out loud: “a dark psychological thriller, nothing supernatural, under 300 pages, on the shelf today”. Shelfwise answers only from the library's own 5,358 books, tells you which floor and shelf to walk to, and explains each pick while a talking avatar reads the answer. It all runs locally on an 8 GB laptop with no paid APIs.",
+    stats: [["0.687", "nDCG@10 on the locked test split"], ["+58%", "over BM25 · +14% over BM25 + dense"], ["95.0%", "query-parser F1"], ["0%", "invented books (naive RAG 21%, LLM alone 77%)"]],
+    images: [
+      ["img/projects/shelfwise-landing.jpg", "Describe a mood, find it on the shelf", "The Shelfwise landing page with the avatar behind an arc of book covers"],
+      ["img/projects/shelfwise-chat.jpg", "Every constraint becomes a chip; the top pick shows its floor and shelf", "Chat answering a request for a dark psychological thriller under 300 pages, with constraint chips and the top pick on stage"],
+      ["img/projects/shelfwise-voice.jpg", "Live voice session: ask out loud, the avatar answers with numbered picks", "The avatar answering a spoken request for gothic horror novels with five numbered books"],
+      ["img/projects/shelfwise-details.jpg", "Book details: what it's like, and where every copy is", "A book detail panel listing tone, romance, violence, pace and the shelf location of each copy"],
+      ["img/projects/shelfwise-bench.jpg", "The /bench page: every claim, measured", "Benchmark cards showing nDCG@10, 0% invented books, 95% constraint F1 and search latency"],
+    ],
     pipeline: [
-      ["Stream ingestion", "Kafka · exactly-once · live vitals + ECG"],
-      ["GPU stream processing", "RAPIDS cuDF + Spark Streaming · Delta Lake"],
-      ["Deep learning core", "Mamba ECG · GRU-D vitals · Graph Attention"],
-      ["Federated training", "FedAvg + DP · torchrun 2×T4"],
-      ["Output", "Deterioration risk + calibrated uncertainty"],
+      ["Speech in", "Whisper large-v3-turbo · Silero VAD"],
+      ["Query parsing", "Qwen3-4B → constraints, preferences, topic"],
+      ["Filter-first retrieval", "SQL allowed set · BM25 + dense · facets"],
+      ["Grounded narration", "ID-constrained LLM + sentence validator"],
+      ["Voice + avatar", "Kokoro streaming TTS · VRM lip-sync"],
     ],
     highlights: [
-      "<b>Mamba state-space ECG encoder</b> for long-range cardiac sequence modeling, outperforming LSTM baselines on irregular clinical time series",
-      "<b>GRU-D vitals encoder</b> with learned missingness decay, built for the extreme sparsity of real ICU data",
-      "<b>Custom Triton GPU kernel</b> running Pan-Tompkins QRS detection fully on-GPU, with zero CPU round-trips",
-      "<b>FedAvg + differential privacy</b> across 5 hospital nodes with formal (ε, δ) guarantees",
-      "<b>Graph Attention Network</b> modeling relational structure across clinical signals, driving 3 prediction heads",
-      "<b>EWC continual learning</b> against catastrophic forgetting as patient populations drift",
-      "<b>Conformal prediction</b> wrapping every risk score in calibrated, distribution-free uncertainty bounds",
+      "<b>Hybrid retrieval over 5,358 books</b> reaching 0.687 nDCG@10, 14% better than BM25 + dense search and 58% better than BM25 alone",
+      "<b>A Qwen3-4B query parser</b> (95.0% F1) that splits a request into hard constraints, soft preferences and a topic, with a deterministic rules fallback",
+      "<b>Negation that works</b>: LLM-tagged book facets turn “without the romance” into a filter instead of a vector that drifts towards romance, halving constraint violations from 62% to 31%",
+      "<b>No invented books</b> across 150 adversarial cases, thanks to ID-constrained generation and validation, against 21% with naive RAG and 77% with an LLM on its own",
+      "<b>A fully local voice assistant</b> with streaming TTS, barge-in interruption and a three.js VRM avatar: 59 FPS, 4 ms median lip-sync offset and 0.73 s to first frame on an 8 GB laptop",
+      "<b>Evaluation built to be trusted</b>: 12,331 relevance judgments, paraphrase-separated dev/test splits and paired bootstrap confidence intervals",
     ],
-    note: "Data: PhysioNet 2012 · PTB-XL  ·  Compute: Apple M2 Pro · Kaggle dual-T4",
+    note: "Behind it sits a simulated library: four floors, multiple copies per title and a year of loans from 2,000 simulated patrons, so “on the shelf today” changes as you use it.",
+  },
+  {
+    id: "sentinel",
+    feature: true,
+    color: "var(--cyan)",
+    cat: "MLOps · Real-time ML",
+    title: "Sentinel",
+    sub: "Real-time card-fraud scoring that watches its own inputs, retrains itself, and only promotes a model that earns it.",
+    metric: ["−46%", "false alarms against a logistic-regression baseline at the same recall target"],
+    stack: ["XGBoost", "Isolation Forest", "FastAPI", "Evidently", "MLflow", "Docker", "Azure ML"],
+    repo: "https://github.com/nooorf/sentinel",
+    summary:
+      "An end-to-end ML system for card fraud: a scoring API that answers in milliseconds, drift monitoring on everything it scores, gated retraining with versioned rollback, and a fraud-operations console, all shipped as one Docker container. It is trained on 284K real card transactions, of which only 0.17% are fraud.",
+    stats: [["9.7 ms", "p99 latency over HTTP"], ["260 / s", "requests at concurrency 8"], ["0.41 → 0.54", "review-queue precision"], ["−62%", "fraud cost vs no screening"]],
+    images: [
+      ["img/projects/sentinel-overview.jpg", "Operations console: impact on a held-out, time-ordered test window", "Sentinel overview showing 46% fewer false alarms, 31% fewer reviews and the precision-recall curve"],
+      ["img/projects/sentinel-score.jpg", "Scoring a real held-out transaction through POST /predict", "A fraudulent transaction scored at 0.997 probability and sent to review"],
+      ["img/projects/sentinel-drift.jpg", "A simulated traffic shift raising an Evidently drift alert", "Drift monitoring grid showing 12 of 29 features drifting in a shifted batch"],
+      ["img/projects/sentinel-registry.jpg", "Model registry with the promotion gate and rollback", "Model versions, retraining runs, and retrain and roll back controls"],
+    ],
+    pipeline: [
+      ["Offline training", "Time-ordered split · LR, XGBoost, Isolation Forest"],
+      ["Scoring API", "POST /predict · probability, anomaly rank, decision"],
+      ["Drift monitoring", "Evidently · feature + prediction drift"],
+      ["Gated retraining", "Validation gate · promote or reject"],
+      ["Registry", "SHA-256 versions · hot swap · rollback"],
+    ],
+    highlights: [
+      "<b>9.7 ms p99 end to end</b> at 260 requests/s, with about 2 ms of that spent in the model itself",
+      "<b>Precision up from 0.41 to 0.54</b> through cost-aware threshold tuning, which cut false alarms by 46%, manual reviews by 31% and fraud cost by 62%",
+      "<b>Leakage-free temporal evaluation</b> on a dataset with 0.17% fraud prevalence, scored on a held-out window of 56,746 transactions the model never saw",
+      "<b>It watches itself</b>: Evidently compares live traffic with the serving model's reference data and raises drift alerts that can trigger retraining",
+      "<b>Safe promotion</b>: a candidate replaces the serving model only after passing a validation gate, with SHA-256-verified versions, zero-downtime hot swap and one-click rollback",
+      "<b>Production engineering</b>: 42 automated tests, GitHub Actions CI, MLflow tracking, a single Docker container and Azure ML blue/green deployment scripts",
+    ],
+    note: "Data: ULB / Worldline credit card fraud dataset, 284,807 transactions over two days with 0.17% fraud.",
   },
   {
     id: "academiq",
-    wide: true,
-    color: "var(--violet)",
-    cat: "Retrieval · LLM Systems",
+    feature: true,
+    color: "var(--pink)",
+    cat: "RAG · Information Retrieval",
     title: "AcademIQ",
-    sub: "Evidence-grounded AI search: hybrid retrieval and grounded LLM answers, each one cited down to the page.",
+    sub: "Evidence-grounded answers to university policy questions, each one cited down to the section and page.",
     metric: ["7×", "faster retrieval than exact TF-IDF, with +6 pp precision"],
-    stack: ["Python", "scikit-learn", "MinHash LSH", "SimHash", "MapReduce", "OpenAI API"],
+    stack: ["Python", "scikit-learn", "MinHash LSH", "SimHash", "MapReduce", "FastAPI", "LLM APIs"],
+    repo: "https://github.com/nooorf/AcademIQ",
     summary:
-      "A production-grade retrieval and question-answering engine that turns dense university policy handbooks into a fast, auditable natural-language knowledge system. Every answer ships with its source, section and page.",
-    stats: [["7×", "faster than exact TF-IDF"], ["+6 pp", "precision recovered"], ["54 ms", "retrieval at 10× corpus"], ["< 1 ms", "cached responses"]],
+      "A production-grade retrieval and question-answering engine that turns NUST's dense undergraduate and postgraduate handbooks into a fast, auditable knowledge system. The LLM is the last step and can only use what retrieval finds, so every answer ships with its source, section and page, and the system says so when the handbook doesn't cover a question.",
+    stats: [["7×", "faster than exact TF-IDF"], ["+6 pp", "precision over exact TF-IDF"], ["54 ms", "retrieval at 10× corpus"], ["< 1 ms", "cached responses"]],
+    images: [
+      ["img/projects/academiq-ask.jpg", "A cited answer, with the retrieved sections plotted in the handbook's TF-IDF space", "AcademIQ answering an attendance policy question with numbered citations beside a map of handbook sections"],
+      ["img/projects/academiq-compare.jpg", "Comparing TF-IDF, MinHash-LSH, SimHash and hybrid RRF on one question", "Side-by-side latency and rank agreement for four retrieval methods"],
+      ["img/projects/academiq-timings.jpg", "Per-stage timings and ranked sources for every answer", "Stage timings for retrieval, re-ranking and generation above the list of cited sources"],
+      ["img/projects/academiq-health.jpg", "System health: latency percentiles, cache hit rate and precision@k", "Dashboard with per-query latency, cache statistics, precision by method and method usage"],
+    ],
     pipeline: [
       ["Query cache", "Thread-safe LRU + TTL · SON-warmed"],
       ["Hybrid retrieval", "TF-IDF · MinHash-LSH · SimHash"],
@@ -50,16 +100,72 @@ const PROJECTS = [
       ["Answer", "Source · section · page · latency"],
     ],
     highlights: [
-      "<b>7× faster retrieval</b> than exact TF-IDF while <b>recovering +6 pp precision</b> through hybrid retrieval and re-ranking",
-      "<b>54 ms retrieval at 10× corpus scale</b>, keeping approximate search well inside the sub-100 ms regime",
-      "<b>Reciprocal Rank Fusion</b> of TF-IDF, MinHash-LSH and SimHash into a single relevance ranking",
-      "<b>Hallucination-resistant synthesis</b> constrained strictly to retrieved evidence",
-      "<b>MapReduce-style parallel indexing</b> and <b>SON frequent-pattern mining</b> to pre-warm the cache",
+      "<b>7× faster retrieval</b> than exact TF-IDF while <b>gaining +6 pp precision</b> through hybrid retrieval and re-ranking",
+      "<b>54 ms retrieval at 10× corpus scale</b>, with sub-millisecond responses for cached queries",
+      "<b>Reciprocal Rank Fusion</b> of TF-IDF, MinHash-LSH and SimHash into a single ranking, with a diversity penalty so one section can't crowd out the rest",
+      "<b>Grounded synthesis</b> that answers strictly from retrieved evidence, with an extractive fallback that keeps answers reliable without an LLM",
+      "<b>Parallel MapReduce-style indexing</b> and <b>SON frequent-query mining</b> to pre-warm a thread-safe LRU/TTL cache",
+    ],
+  },
+  {
+    id: "cortexpi",
+    wide: true,
+    color: "var(--teal)",
+    cat: "Clinical AI · Federated Learning",
+    title: "CortexPI",
+    sub: "Federated ICU sepsis and deterioration prediction across hospitals, without patient records ever leaving their source.",
+    metric: ["5", "hospital nodes trained with FedAvg + differential privacy"],
+    stack: ["PyTorch", "Mamba SSM", "GRU-D", "Triton", "Kafka", "Spark", "Delta Lake"],
+    summary:
+      "A multimodal patient-deterioration platform that predicts sepsis risk from ECG waveforms and irregular ICU vitals. Training is federated across distributed hospital nodes, so no patient record ever leaves the hospital it came from.",
+    stats: [["5", "federated hospital nodes"], ["77×", "faster GPU ECG preprocessing"], ["< 100 ms", "per-patient latency target"], ["2×T4", "pipeline-parallel training"]],
+    pipeline: [
+      ["Stream ingestion", "Kafka · live vitals + ECG"],
+      ["GPU stream processing", "Triton · RAPIDS cuDF · Spark · Delta Lake"],
+      ["Deep learning core", "Mamba ECG · GRU-D vitals · Graph Attention"],
+      ["Federated training", "FedAvg + DP · dual-GPU pipeline parallelism"],
+      ["Output", "Sepsis risk + calibrated uncertainty"],
+    ],
+    highlights: [
+      "<b>Multimodal architecture</b> combining a Mamba state-space ECG encoder, a GRU-D vitals encoder with learned missingness decay, and graph attention across clinical signals",
+      "<b>Five-node federated pipeline</b> with FedAvg and differential privacy under formal (ε, δ) guarantees, trained across distributed hospital data with dual-GPU pipeline parallelism",
+      "<b>GPU-accelerated ECG preprocessing</b> with NVIDIA Triton; I contributed to the optimization within a benchmark that cut preprocessing from 2,400 ms to 31 ms (77×)",
+      "<b>Distributed inference</b> through GPU acceleration and parallel execution, targeting under 100 ms per patient across a Kafka-based streaming architecture",
+      "<b>EWC continual learning</b> against catastrophic forgetting as patient populations drift",
+      "<b>Conformal prediction</b> wrapping every risk score in calibrated, distribution-free uncertainty bounds",
+    ],
+    note: "Data: PhysioNet 2012 · PTB-XL  ·  Compute: Apple M2 Pro · Kaggle dual-T4",
+  },
+  {
+    id: "brats",
+    wide: true,
+    color: "var(--blue)",
+    cat: "Medical Imaging · 3D Vision",
+    title: "3D Brain Tumor Segmentation",
+    sub: "Multimodal MRI fusion with a compact MONAI 3D U-Net.",
+    metric: ["0.77", "Dice on enhancing tumor, the clinically critical class"],
+    stack: ["PyTorch", "MONAI", "3D U-Net", "BraTS 2020", "W&B"],
+    summary:
+      "A volumetric deep-learning pipeline that fuses four complementary MRI sequences (T1, T1ce, T2 and FLAIR) to deliver voxel-precise, multi-class brain tumor segmentation.",
+    stats: [["0.7652", "Dice · enhancing tumor"], ["0.6479", "mean validation Dice"], ["55", "held-out patients"], ["4.8 M", "parameters"]],
+    pipeline: [
+      ["Multimodal MRI", "T1 · T1ce · T2 · FLAIR fusion"],
+      ["3D preprocessing", "Normalization · foreground-biased 96³ patches"],
+      ["MONAI 3D U-Net", "4.8 M params · Dice + Focal loss"],
+      ["Inference", "Sliding-window, full-volume"],
+      ["Evaluation", "Patient-level split · W&B tracked"],
+    ],
+    highlights: [
+      "<b>0.7652 Dice on Enhancing Tumor</b>, the clinically critical sub-region",
+      "<b>4-modal 3D MRI fusion</b> into a single volumetric input for voxel-level reasoning",
+      "<b>Foreground-biased sampling</b> and a <b>hybrid Dice + Focal loss</b> to counter extreme class imbalance",
+      "<b>Leak-proof evaluation</b> with strict patient-level splits and independent evaluation, fully tracked in Weights & Biases",
     ],
   },
   {
     id: "spatio",
-    color: "var(--pink)",
+    wide: true,
+    color: "var(--violet)",
     cat: "Generative AI · Diffusion",
     status: "In progress",
     title: "SpatioArchitect",
@@ -86,32 +192,8 @@ const PROJECTS = [
     note: "Final Year Project · 3-person team. My core area is deep learning & mathematical modelling.",
   },
   {
-    id: "brats",
-    color: "var(--blue)",
-    cat: "Medical Imaging · 3D Vision",
-    title: "3D Brain Tumor Segmentation",
-    sub: "Multi-modal MRI fusion with a compact MONAI 3D U-Net.",
-    metric: ["0.77", "Dice on enhancing tumor, the clinically critical class"],
-    stack: ["PyTorch", "MONAI", "3D U-Net", "BraTS 2020", "W&B"],
-    summary:
-      "A volumetric deep-learning pipeline that fuses four complementary MRI sequences (T1, T1ce, T2 and FLAIR) to deliver voxel-precise, multi-class brain tumor segmentation.",
-    stats: [["0.7652", "Dice · enhancing tumor"], ["0.6479", "mean validation Dice"], ["55", "held-out patients"], ["4.8 M", "parameters"]],
-    pipeline: [
-      ["Multi-modal MRI", "T1 · T1ce · T2 · FLAIR fusion"],
-      ["3D preprocessing", "Normalization · foreground-biased 96³ patches"],
-      ["MONAI 3D U-Net", "4.8 M params · Dice + Focal loss"],
-      ["Inference", "Sliding-window, full-volume"],
-      ["Evaluation", "Patient-level split · W&B tracked"],
-    ],
-    highlights: [
-      "<b>0.7652 Dice on Enhancing Tumor</b>, the clinically critical sub-region",
-      "<b>4-modal 3D MRI fusion</b> into a single volumetric input for voxel-level reasoning",
-      "<b>Hybrid Dice + Focal loss</b> to counter extreme class imbalance",
-      "<b>Leak-proof evaluation</b> with strict patient-level splits, fully tracked in Weights & Biases",
-    ],
-  },
-  {
     id: "london",
+    wide: true,
     color: "var(--teal)",
     cat: "Geospatial ML · XAI",
     title: "London Crime Intelligence",
@@ -138,17 +220,18 @@ const PROJECTS = [
 ];
 
 const STACK_A = [
-  ["Python", "cyan"], ["PyTorch", "pink"], ["TensorFlow", "violet"], ["scikit-learn", "blue"], ["MONAI", "teal"],
-  ["OpenCV", "cyan"], ["Triton", "pink"], ["XGBoost", "blue"], ["SHAP", "teal"],
-  ["Weights & Biases", "violet"], ["LLMs & RAG", "cyan"],
+  ["Python", "cyan"], ["PyTorch", "pink"], ["Hugging Face Transformers", "violet"], ["Sentence Transformers", "blue"], ["scikit-learn", "teal"],
+  ["XGBoost", "cyan"], ["MONAI", "pink"], ["Stable-Baselines3", "violet"], ["Gymnasium", "blue"], ["Ollama", "teal"],
+  ["pgvector", "cyan"], ["Triton", "pink"], ["SHAP", "violet"], ["pandas", "teal"], ["NumPy", "cyan"], ["SciPy", "blue"],
 ];
 const STACK_B = [
-  ["Apache Spark", "pink"], ["Apache Kafka", "cyan"], ["RAPIDS", "teal"], ["Delta Lake", "blue"], ["Pandas", "violet"],
-  ["NumPy", "cyan"], ["GeoPandas", "teal"], ["FastAPI", "pink"], ["React", "cyan"], ["TypeScript", "blue"],
-  ["three.js", "violet"], ["Docker", "blue"], ["Linux", "teal"], ["C++", "pink"], ["Java", "violet"],
+  ["FastAPI", "pink"], ["PostgreSQL", "cyan"], ["SQLAlchemy", "teal"], ["Redis", "blue"], ["Docker", "violet"],
+  ["GitHub Actions", "cyan"], ["MLflow", "teal"], ["Evidently", "pink"], ["Azure ML", "blue"], ["Weights & Biases", "violet"],
+  ["Apache Kafka", "cyan"], ["Apache Spark", "pink"], ["React", "teal"], ["TypeScript", "blue"], ["Node.js", "violet"],
+  ["three.js", "cyan"], ["SQL", "pink"], ["C++", "teal"],
 ];
 
-const TYPED = ["Deep Learning · Generative AI · LLM Systems", "RAG · Agentic AI · Real-time ML", "Reinforcement learning for 6G", "End-to-end ML: data → model → deployment"];
+const TYPED = ["Hybrid retrieval · grounded LLMs · voice AI", "Real-time ML · drift monitoring · MLOps", "Deep reinforcement learning for 6G", "End-to-end ML: data → model → deployment"];
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (s, r = document) => r.querySelector(s);
@@ -290,20 +373,27 @@ const navMap = new Map([...document.querySelectorAll(".nav-links a:not(.nav-cta)
 
 /* ───────────────────────── projects ───────────────────────── */
 const arrow = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const GITHUB_ICON = '<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57v-2.2c-3.34.73-4.04-1.42-4.04-1.42-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.31-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.62-5.48 5.92.42.36.81 1.1.81 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .3"/></svg>';
 const bento = $("#bento");
+let featureCount = 0;
 PROJECTS.forEach((p, i) => {
   const card = document.createElement("button");
   card.type = "button";
-  card.className = `card reveal${p.wide ? " wide" : ""}`;
+  const flip = p.feature && featureCount++ % 2 === 1;
+  card.className = `card reveal${p.feature ? " feature" : p.wide ? " wide" : ""}${flip ? " flip" : ""}`;
   card.style.setProperty("--c", p.color);
-  card.style.setProperty("--d", `${(i % 3) * 0.08}s`);
+  card.style.setProperty("--d", `${p.feature ? 0 : (i % 2) * 0.08}s`);
   card.setAttribute("aria-haspopup", "dialog");
-  card.innerHTML = `
-    <div class="card-top"><span class="card-cat">${p.cat}</span>${p.status ? `<span class="card-status">${p.status}</span>` : ""}</div>
+  const body = `
+    <div class="card-top"><span class="card-cat">${p.cat}</span>${p.status ? `<span class="card-status">${p.status}</span>` : p.feature ? `<span class="card-flag">Flagship</span>` : ""}</div>
     <h3>${p.title}</h3>
     <p class="card-sub">${p.sub}</p>
     <div class="card-metric"><strong>${p.metric[0]}</strong><span>${p.metric[1]}</span></div>
     <div class="card-foot"><span class="card-stack">${p.stack.join(" · ")}</span><span class="card-open">${arrow}</span></div>`;
+  card.innerHTML = p.feature
+    ? `<div class="card-body">${body}</div>
+       <div class="card-shot"><div class="shot-bar"><span></span><span></span><span></span></div><img src="${p.images[0][0]}" alt="${p.images[0][2]}" loading="lazy" decoding="async" /></div>`
+    : body;
   card.addEventListener("pointermove", (e) => {
     const r = card.getBoundingClientRect();
     card.style.setProperty("--mx", `${e.clientX - r.left}px`);
@@ -324,13 +414,16 @@ function openProject(p) {
       <p>${p.summary}</p>
     </div>
     <div class="m-stats">${p.stats.map(([v, l]) => `<div class="m-stat"><strong>${v}</strong><span>${l}</span></div>`).join("")}</div>
+    ${p.images ? `<p class="m-h">Screenshots</p>
+    <div class="gallery">${p.images.map(([src, cap, alt]) => `<figure><a href="${src}" target="_blank" rel="noopener"><img src="${src}" alt="${alt}" loading="lazy" decoding="async" /></a><figcaption>${cap}</figcaption></figure>`).join("")}</div>` : ""}
     <p class="m-h">Architecture</p>
     <div class="pipeline">${p.pipeline.map(([t, d]) => `<div class="pipe"><b>${t}</b><span>${d}</span></div>`).join("")}</div>
     <p class="m-h">Highlights</p>
     <ul class="ticks">${p.highlights.map((h) => `<li>${h}</li>`).join("")}</ul>
     ${p.note ? `<p class="m-note">${p.note}</p>` : ""}
     <p class="m-h">Stack</p>
-    <div class="tags">${p.stack.map((s) => `<span>${s}</span>`).join("")}</div>`;
+    <div class="tags">${p.stack.map((s) => `<span>${s}</span>`).join("")}</div>
+    ${p.repo ? `<a class="btn btn-ghost m-repo" href="${p.repo}" target="_blank" rel="noopener">${GITHUB_ICON} View the code on GitHub</a>` : ""}`;
   modal.showModal();
   modalBody.scrollTop = 0;
   document.body.style.overflow = "hidden";
